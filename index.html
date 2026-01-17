@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget & Expense Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link href="styles-new.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Theme Switcher -->
+    <style id="theme-styles"></style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-indigo-50 via-white to-teal-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-900 mb-4">Smart Budget Tracker</h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Take control of your finances with simple, intuitive expense tracking and intelligent insights</p>
+            </div>
+            
+            <!-- Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="summary-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i class="ri-arrow-up-line text-2xl text-green-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-green-600 bg-green-50 px-3 py-1 rounded-full">+12%</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Total Income</p>
+                    <p class="text-3xl font-bold text-gray-900 currency" id="totalIncome">₹0</p>
+                </div>
+                
+                <div class="summary-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                            <i class="ri-arrow-down-line text-2xl text-red-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-red-600 bg-red-50 px-3 py-1 rounded-full">-8%</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Total Expenses</p>
+                    <p class="text-3xl font-bold text-gray-900 currency" id="totalExpenses">₹0</p>
+                </div>
+                
+                <div class="summary-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                            <i class="ri-wallet-line text-2xl text-indigo-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Healthy</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Remaining Balance</p>
+                    <p class="text-3xl font-bold text-gray-900 currency" id="balance">₹0</p>
+                </div>
+                
+                <div class="summary-card bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center">
+                            <i class="ri-piggy-bank-line text-2xl text-teal-600"></i>
+                        </div>
+                        <span class="text-sm font-medium text-teal-600 bg-teal-50 px-3 py-1 rounded-full">On Track</span>
+                    </div>
+                    <p class="text-sm font-medium text-gray-600 mb-1">Savings Progress</p>
+                    <p class="text-3xl font-bold text-gray-900" id="savingsProgress">0%</p>
+                </div>
+            </div>
+            
+            <!-- Monthly Expense Chart -->
+            <div class="mb-8">
+                <div class="card card-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-900 mb-6">Monthly Expense Overview</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+                        <div class="w-full">
+                            <div class="relative" style="padding-bottom: 56.25%;">
+                                <canvas id="expenseChart" class="absolute inset-0 w-full h-full"></canvas>
+                            </div>
+                        </div>
+                        <div class="w-full">
+                            <div class="relative" style="padding-bottom: 56.25%;">
+                                <canvas id="categoryChart" class="absolute inset-0 w-full h-full"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <!-- Quick Actions -->
+        <div class="mb-8">
+            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome back!</h2>
+                        <p class="text-gray-600" id="currentDate"></p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="relative">
+                            <button onclick="toggleThemeSwitcher()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
+                                <i class="ri-palette-line text-xl"></i>
+                                <span>Themes</span>
+                                <i class="ri-arrow-down-s-line text-sm"></i>
+                            </button>
+                            <div id="theme-switcher" class="absolute top-full right-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-200 hidden z-50">
+                                <div class="p-2">
+                                    <button onclick="switchTheme('default')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-sun-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Default</div>
+                                            <div class="text-sm text-gray-500">Clean & Modern</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('dark-fintech')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-moon-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Dark Fintech</div>
+                                            <div class="text-sm text-gray-500">Premium Dark Mode</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('colorful-playful')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-rainbow-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Colorful Playful</div>
+                                            <div class="text-sm text-gray-500">Fun & Vibrant</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('ultra-realistic')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-vip-diamond-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Ultra-Realistic</div>
+                                            <div class="text-sm text-gray-500">3D Premium</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('minimal-icons')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-layout-grid-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Minimal Icons</div>
+                                            <div class="text-sm text-gray-500">Clean & Simple</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('mobile-hero')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-smartphone-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Mobile Hero</div>
+                                            <div class="text-sm text-gray-500">Device Showcase</div>
+                                        </div>
+                                    </button>
+                                    <button onclick="switchTheme('indian-finance')" class="w-full text-left px-4 py-3 rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-3">
+                                        <i class="ri-money-rupee-circle-line text-lg"></i>
+                                        <div>
+                                            <div class="font-medium">Indian Finance</div>
+                                            <div class="text-sm text-gray-500">₹ Themed</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="showAddExpenseModal()" class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-700 transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2">
+                            <i class="ri-add-line text-xl"></i>
+                            Add Expense
+                        </button>
+                        <button onclick="exportData()" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center gap-2">
+                            <i class="ri-download-line text-xl"></i>
+                            Export
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+            <div class="border-b border-gray-100 bg-gray-50">
+                <nav class="flex flex-wrap -mb-px">
+                    <button onclick="showTab('transactions')" class="tab-btn active px-6 py-4 border-b-2 border-indigo-600 text-indigo-600 font-medium text-sm hover:bg-white transition-all duration-200">
+                        <i class="ri-exchange-line mr-2"></i>Transactions
+                    </button>
+                    <button onclick="showTab('budget')" class="tab-btn px-6 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300 font-medium text-sm hover:bg-white transition-all duration-200">
+                        <i class="ri-calculator-line mr-2"></i>Budget Planning
+                    </button>
+                    <button onclick="showTab('savings')" class="tab-btn px-6 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300 font-medium text-sm hover:bg-white transition-all duration-200">
+                        <i class="ri-piggy-bank-line mr-2"></i>Savings Goals
+                    </button>
+                    <button onclick="showTab('reports')" class="tab-btn px-6 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300 font-medium text-sm hover:bg-white transition-all duration-200">
+                        <i class="ri-bar-chart-line mr-2"></i>Reports
+                    </button>
+                    <button onclick="showTab('insights')" class="tab-btn px-6 py-4 border-b-2 border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300 font-medium text-sm hover:bg-white transition-all duration-200">
+                        <i class="ri-lightbulb-line mr-2"></i>Insights
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="p-8">
+                <!-- Transactions Tab -->
+                <div id="transactions-tab" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Add Transaction Form -->
+                        <div class="lg:col-span-1">
+                            <div class="card card-lg p-6">
+                                <h3 class="text-xl font-semibold text-gray-900 mb-6">Add Transaction</h3>
+                                <form id="transactionForm" class="space-y-5">
+                                    <div>
+                                        <label class="form-label">Transaction Type</label>
+                                        <select id="transactionType" class="form-input">
+                                            <option value="income">Income</option>
+                                            <option value="expense">Expense</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="form-label">Description</label>
+                                        <input type="text" id="transactionDescription" required class="form-input" placeholder="What's this for?">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="form-label">Amount (₹)</label>
+                                        <input type="number" id="transactionAmount" required min="0" step="0.01" class="form-input currency" placeholder="0.00">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="form-label">Date</label>
+                                        <input type="date" id="transactionDate" required class="form-input">
+                                    </div>
+                                    
+                                    <div id="categoryField" class="hidden">
+                                        <label class="form-label">Category</label>
+                                        <select id="transactionCategory" class="form-input">
+                                            <option value="food">🍔 Food</option>
+                                            <option value="rent">🏠 Rent</option>
+                                            <option value="transport">🚗 Transport</option>
+                                            <option value="shopping">🛍️ Shopping</option>
+                                            <option value="bills">📄 Bills</option>
+                                            <option value="emi">💳 EMI/Loans</option>
+                                            <option value="health">🏥 Health</option>
+                                            <option value="entertainment">🎮 Entertainment</option>
+                                            <option value="education">📚 Education</option>
+                                            <option value="others">📦 Others</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div id="incomeFrequencyField" class="hidden">
+                                        <label class="form-label">Frequency</label>
+                                        <select id="incomeFrequency" class="form-input">
+                                            <option value="one-time">One-time</option>
+                                            <option value="weekly">Weekly</option>
+                                            <option value="monthly">Monthly</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-full text-lg py-4">
+                                        <i class="ri-add-line"></i>
+                                        Add Transaction
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Transactions List -->
+                        <div class="lg:col-span-2">
+                            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                                <h3 class="text-xl font-semibold text-gray-900">Recent Transactions</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <select id="filterCategory" class="form-input text-sm">
+                                        <option value="all">All Categories</option>
+                                        <option value="food">🍔 Food</option>
+                                        <option value="rent">🏠 Rent</option>
+                                        <option value="transport">🚗 Transport</option>
+                                        <option value="shopping">🛍️ Shopping</option>
+                                        <option value="bills">📄 Bills</option>
+                                        <option value="emi">💳 EMI/Loans</option>
+                                        <option value="health">🏥 Health</option>
+                                        <option value="entertainment">🎮 Entertainment</option>
+                                        <option value="education">📚 Education</option>
+                                        <option value="others">📦 Others</option>
+                                    </select>
+                                    <select id="filterType" class="form-input text-sm">
+                                        <option value="all">All Types</option>
+                                        <option value="income">Income</option>
+                                        <option value="expense">Expense</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="transactionsList" class="space-y-3 max-h-96 overflow-y-auto pr-2">
+                                <!-- Transactions will be added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Budget Tab -->
+                <div id="budget-tab" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Monthly Budget Setting -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Monthly Budget</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Total Monthly Budget (₹)</label>
+                                    <input type="number" id="monthlyBudget" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.00">
+                                </div>
+                                <button onclick="saveBudget()" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors">
+                                    Save Budget
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Category Limits -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Category Limits</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div id="categoryLimits" class="space-y-3">
+                                    <!-- Category limits will be added here -->
+                                </div>
+                                <button onclick="saveCategoryLimits()" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors mt-4">
+                                    Save Category Limits
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Budget Overview -->
+                    <div class="mt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Budget Overview</h3>
+                        <div id="budgetOverview" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <!-- Budget overview cards will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Savings Tab -->
+                <div id="savings-tab" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Savings Goal Setting -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Set Savings Goal</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="space-y-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Goal Name</label>
+                                        <input type="text" id="goalName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g., Emergency Fund">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Amount (₹)</label>
+                                        <input type="number" id="goalAmount" min="0" step="0.01" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0.00">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Target Date</label>
+                                        <input type="date" id="goalDate" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    </div>
+                                    <button onclick="saveSavingsGoal()" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition-colors">
+                                        Set Goal
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Current Goals -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Current Goals</h3>
+                            <div id="savingsGoals" class="space-y-4">
+                                <!-- Savings goals will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reports Tab -->
+                <div id="reports-tab" class="tab-content hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Expense Summary -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Expense Summary</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div class="mb-4">
+                                    <select id="reportPeriod" class="px-3 py-2 border border-gray-300 rounded-md">
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <div id="expenseSummary" class="space-y-3">
+                                    <!-- Expense summary will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Category Analysis -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Category Analysis</h3>
+                            <div class="bg-gray-50 rounded-lg p-6">
+                                <div id="categoryAnalysis" class="space-y-3">
+                                    <!-- Category analysis will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comparison -->
+                    <div class="mt-6">
+                        <h3 class="text-lg font-medium text-gray-900 mb-4">Month Comparison</h3>
+                        <div id="monthComparison" class="bg-gray-50 rounded-lg p-6">
+                            <!-- Month comparison will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Insights Tab -->
+                <div id="insights-tab" class="tab-content hidden">
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Spending Insights</h3>
+                            <div id="spendingInsights" class="space-y-4">
+                                <!-- Insights will be displayed here -->
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Budget Warnings</h3>
+                            <div id="budgetWarnings" class="space-y-4">
+                                <!-- Budget warnings will be displayed here -->
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-4">Suggestions</h3>
+                            <div id="suggestions" class="space-y-4">
+                                <!-- Suggestions will be displayed here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+/* 6️⃣ INDIAN FINANCE STYLE (₹ FOCUS) THEME */
+
+/* Indian Finance Variables */
+:root {
+    /* Indian Currency Colors */
+    --rupee-gold: #b8860b;
+    --rupee-bronze: #cd7f32;
+    --rupee-copper: #b87333;
+    --rupee-silver: #c0c0c0;
+    
+    /* Indian Flag Colors */
+    --saffron: #ff9933;
+    --white: #ffffff;
+    --green: #138808;
+    --ashoka-chakra: #000080;
+    
+    /* Finance Colors */
+    --finance-blue: #1e3a8a;
+    --finance-teal: #0f766e;
+    --finance-green: #14532d;
+    --finance-gold: #a16207;
+    
+    /* Background */
+    --bg-primary: #fefce8;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f7fee7;
+    --bg-accent: #eff6ff;
+    
+    /* Text Colors */
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    
+    /* Indian Patterns */
+    --pattern-paisley: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(184, 134, 11, 0.03) 10px, rgba(184, 134, 11, 0.03) 20px);
+    --pattern-mandala: radial-gradient(circle at center, transparent 30%, rgba(19, 136, 8, 0.02) 30%, transparent 31%);
+    
+    /* Shadows */
+    --shadow-soft: 0 2px 8px rgba(30, 58, 138, 0.1);
+    --shadow-medium: 0 4px 16px rgba(30, 58, 138, 0.15);
+    --shadow-strong: 0 8px 32px rgba(30, 58, 138, 0.2);
+}
+
+/* Indian Finance Base */
+body {
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-tertiary) 100%);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Indian Pattern Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--pattern-paisley);
+    pointer-events: none;
+    z-index: -1;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: var(--pattern-mandala);
+    background-size: 200px 200px;
+    background-position: 0 0, 100px 100px;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Rupee Symbol Styling */
+.rupee-symbol {
+    position: relative;
+    display: inline-block;
+}
+
+.rupee-symbol::before {
+    content: '₹';
+    font-weight: 700;
+    color: var(--rupee-gold);
+}
+
+/* Indian Finance Cards */
+.card {
+    background: var(--bg-secondary);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        var(--saffron) 0%, 
+        var(--white) 33%, 
+        var(--green) 66%, 
+        var(--saffron) 100%
+    );
+    border-radius: 1rem;
+    padding: 2px;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 0.3;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-medium);
+}
+
+.card-lg {
+    border-radius: 1.25rem;
+    padding: 2rem;
+}
+
+/* Indian Summary Cards */
+.summary-card {
+    background: var(--bg-secondary);
+    border-radius: 1.25rem;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 2px solid var(--rupee-gold);
+}
+
+.summary-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        var(--rupee-gold),
+        var(--rupee-bronze),
+        var(--rupee-copper),
+        var(--rupee-silver),
+        var(--rupee-gold)
+    );
+    animation: rotate 10s linear infinite;
+    opacity: 0.1;
+}
+
+.summary-card:hover::after {
+    opacity: 0.2;
+}
+
+.summary-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: var(--shadow-strong);
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Indian Icon Containers */
+.icon-container {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    position: relative;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, var(--rupee-gold), var(--rupee-bronze));
+    color: white;
+    box-shadow: var(--shadow-soft);
+}
+
+.icon-container::before {
+    content: '₹';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--rupee-gold);
+    background: var(--bg-secondary);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-soft);
+}
+
+.icon-container-green {
+    background: linear-gradient(135deg, var(--finance-green), var(--green));
+    box-shadow: 0 4px 12px rgba(19, 136, 8, 0.3);
+}
+
+.icon-container-red {
+    background: linear-gradient(135deg, #dc2626, var(--saffron));
+    box-shadow: 0 4px 12px rgba(255, 153, 51, 0.3);
+}
+
+.icon-container-indigo {
+    background: linear-gradient(135deg, var(--finance-blue), var(--ashoka-chakra));
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.icon-container-teal {
+    background: linear-gradient(135deg, var(--finance-teal), #0d9488);
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.3);
+}
+
+.icon-container:hover {
+    transform: translateY(-4px) rotate(2deg);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Indian Badges */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.badge:hover::before {
+    left: 100%;
+}
+
+.badge-success {
+    background: linear-gradient(135deg, var(--finance-green), var(--green));
+    color: white;
+    box-shadow: 0 2px 8px rgba(19, 136, 8, 0.3);
+}
+
+.badge-warning {
+    background: linear-gradient(135deg, var(--rupee-gold), var(--finance-gold));
+    color: white;
+    box-shadow: 0 2px 8px rgba(184, 134, 11, 0.3);
+}
+
+.badge-error {
+    background: linear-gradient(135deg, #dc2626, var(--saffron));
+    color: white;
+    box-shadow: 0 2px 8px rgba(255, 153, 51, 0.3);
+}
+
+.badge-primary {
+    background: linear-gradient(135deg, var(--finance-blue), var(--ashoka-chakra));
+    color: white;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+}
+
+.badge:hover {
+    transform: scale(1.05);
+}
+
+/* Indian Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem 2.5rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.2) 0%, 
+        transparent 100%
+    );
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--finance-blue), var(--ashoka-chakra));
+    color: white;
+    box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30, 58, 138, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, var(--rupee-gold), var(--finance-gold));
+    color: white;
+    box-shadow: 0 4px 12px rgba(184, 134, 11, 0.3);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(184, 134, 11, 0.4);
+}
+
+/* Indian Form Elements */
+.form-input {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    border: 2px solid var(--rupee-gold);
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-soft);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--finance-blue);
+    box-shadow: 
+        0 0 0 3px rgba(30, 58, 138, 0.1),
+        var(--shadow-medium);
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.form-label::after {
+    content: ' ₹';
+    color: var(--rupee-gold);
+    font-weight: 700;
+    margin-left: 0.25rem;
+}
+
+/* Indian Tab Navigation */
+.tab-nav {
+    background: var(--bg-secondary);
+    border-bottom: 3px solid var(--rupee-gold);
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: var(--shadow-soft);
+}
+
+.tab-btn {
+    padding: 1.5rem 2rem;
+    border: none;
+    background: transparent;
+    color: var(--text-tertiary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--rupee-gold), var(--finance-gold));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background: rgba(184, 134, 11, 0.05);
+}
+
+.tab-btn.active {
+    color: var(--rupee-gold);
+    background: rgba(184, 134, 11, 0.1);
+}
+
+.tab-btn.active::after {
+    width: 80%;
+}
+
+/* Indian Transaction Items */
+.transaction-item {
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+}
+
+.transaction-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        transparent 0%, 
+        rgba(184, 134, 11, 0.1) 50%, 
+        transparent 100%
+    );
+    border-radius: 1rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.transaction-item:hover::before {
+    opacity: 1;
+}
+
+.transaction-item.income:hover {
+    transform: translateX(8px);
+    border-color: var(--finance-green);
+    box-shadow: 0 4px 12px rgba(19, 136, 8, 0.2);
+}
+
+.transaction-item.expense:hover {
+    transform: translateX(8px);
+    border-color: var(--saffron);
+    box-shadow: 0 4px 12px rgba(255, 153, 51, 0.2);
+}
+
+/* Indian Progress Bars */
+.progress-bar {
+    width: 100%;
+    height: 1rem;
+    background: rgba(184, 134, 11, 0.2);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 100%
+    );
+    border-radius: 9999px 9999px 0 0;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+.progress-fill-good {
+    background: linear-gradient(90deg, var(--finance-green), var(--green));
+    box-shadow: 0 0 20px rgba(19, 136, 8, 0.4);
+}
+
+.progress-fill-warning {
+    background: linear-gradient(90deg, var(--rupee-gold), var(--finance-gold));
+    box-shadow: 0 0 20px rgba(184, 134, 11, 0.4);
+}
+
+.progress-fill-danger {
+    background: linear-gradient(90deg, #dc2626, var(--saffron));
+    box-shadow: 0 0 20px rgba(255, 153, 51, 0.4);
+}
+
+@keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Indian Insight Cards */
+.insight-card {
+    background: var(--bg-secondary);
+    border: 2px solid transparent;
+    border-radius: 1rem;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: var(--shadow-soft);
+}
+
+.insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    border-radius: 0 2px 2px 0;
+}
+
+.insight-card.success::before {
+    background: linear-gradient(180deg, var(--finance-green), var(--green));
+}
+
+.insight-card.warning::before {
+    background: linear-gradient(180deg, var(--rupee-gold), var(--finance-gold));
+}
+
+.insight-card.error::before {
+    background: linear-gradient(180deg, #dc2626, var(--saffron));
+}
+
+.insight-card.info::before {
+    background: linear-gradient(180deg, var(--finance-blue), var(--ashoka-chakra));
+}
+
+.insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+/* Hero Section Indian */
+.hero-section {
+    background: linear-gradient(135deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%, 
+        var(--bg-tertiary) 100%
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(184, 134, 11, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(19, 136, 8, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+/* Indian Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--rupee-gold), var(--finance-gold));
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--finance-blue), var(--ashoka-chakra));
+}
+
+/* Responsive Indian */
+@media (max-width: 640px) {
+    .summary-card {
+        padding: 1.5rem;
+    }
+    
+    .icon-container {
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.75rem;
+    }
+    
+    .btn {
+        padding: 1rem 2rem;
+        font-size: 0.8125rem;
+    }
+    
+    .tab-btn {
+        padding: 1.25rem 1.5rem;
+        font-size: 0.8125rem;
+    }
+}
+
+/* Indian Chart Overrides */
+canvas {
+    filter: drop-shadow(0 4px 8px rgba(184, 134, 11, 0.2));
+    border-radius: 0.5rem;
+}
+
+/* Currency Display */
+.currency {
+    font-family: 'Inter', monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+.currency::before {
+    content: '₹';
+    font-weight: 600;
+    color: var(--rupee-gold);
+    margin-right: 0.125rem;
+}

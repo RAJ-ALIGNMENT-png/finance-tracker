@@ -1,0 +1,615 @@
+/* 5️⃣ MOBILE + WEBSITE HERO COMBO THEME */
+
+/* Mobile Hero Variables */
+:root {
+    /* Device Colors */
+    --device-black: #1a1a1a;
+    --device-white: #ffffff;
+    --device-gray: #f5f5f7;
+    --device-screen: #000000;
+    
+    /* Screen Colors */
+    --screen-primary: #007aff;
+    --screen-secondary: #34c759;
+    --screen-accent: #ff3b30;
+    --screen-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    
+    /* Hero Background */
+    --hero-primary: #ffffff;
+    --hero-secondary: #f8f9fa;
+    --hero-accent: #e3f2fd;
+    
+    /* Floating Elements */
+    --float-blue: #2196f3;
+    --float-green: #4caf50;
+    --float-purple: #9c27b0;
+    --float-orange: #ff9800;
+    
+    /* Shadows */
+    --shadow-device: 0 20px 40px rgba(0, 0, 0, 0.3);
+    --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.2);
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.1);
+    
+    /* Text */
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --text-light: #ecf0f1;
+}
+
+/* Mobile Hero Base */
+body {
+    background: linear-gradient(135deg, var(--hero-primary) 0%, var(--hero-secondary) 50%, var(--hero-accent) 100%);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Floating Background Elements */
+.floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.floating-chart {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: var(--float-blue);
+    border-radius: 12px;
+    opacity: 0.1;
+    animation: float-up 20s infinite ease-in-out;
+}
+
+.floating-wallet {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: var(--float-green);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: float-up 25s infinite ease-in-out;
+}
+
+.floating-coin {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: var(--float-orange);
+    border-radius: 50%;
+    opacity: 0.1;
+    animation: float-up 15s infinite ease-in-out;
+}
+
+.floating-progress {
+    position: absolute;
+    width: 100px;
+    height: 20px;
+    background: var(--float-purple);
+    border-radius: 10px;
+    opacity: 0.1;
+    animation: float-up 30s infinite ease-in-out;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.1;
+    }
+    90% {
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Device Mockups */
+.device-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    padding: 4rem 2rem;
+    position: relative;
+}
+
+/* Smartphone Mockup */
+.smartphone {
+    width: 280px;
+    height: 560px;
+    background: var(--device-black);
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow: var(--shadow-device);
+    position: relative;
+    transform: rotate(-5deg);
+    transition: transform 0.3s ease;
+}
+
+.smartphone:hover {
+    transform: rotate(-5deg) scale(1.05);
+}
+
+.smartphone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--screen-bg);
+    border-radius: 28px;
+    overflow: hidden;
+    position: relative;
+}
+
+.smartphone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 25px;
+    background: var(--device-black);
+    border-radius: 0 0 15px 15px;
+}
+
+.smartphone-content {
+    padding: 40px 20px 20px;
+    color: white;
+    font-size: 0.75rem;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.app-title {
+    font-weight: 600;
+    font-size: 0.875rem;
+}
+
+.app-status {
+    display: flex;
+    gap: 4px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+
+.app-balance {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.balance-amount {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.balance-label {
+    opacity: 0.8;
+    font-size: 0.75rem;
+}
+
+.app-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.app-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.app-card-title {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.app-card-value {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Laptop Mockup */
+.laptop {
+    width: 480px;
+    height: 320px;
+    background: var(--device-gray);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: var(--shadow-device);
+    position: relative;
+    transform: rotate(3deg);
+    transition: transform 0.3s ease;
+}
+
+.laptop:hover {
+    transform: rotate(3deg) scale(1.05);
+}
+
+.laptop-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--screen-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.laptop-content {
+    padding: 20px;
+    color: white;
+    font-size: 0.875rem;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.dashboard-nav {
+    display: flex;
+    gap: 8px;
+}
+
+.nav-dot {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-card-title {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    margin-bottom: 4px;
+}
+
+.dashboard-card-value {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.dashboard-chart {
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.chart-bar {
+    width: 8px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 4px;
+}
+
+/* Hero Cards */
+.hero-card {
+    background: var(--hero-primary);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--float-blue), var(--float-green), var(--float-purple));
+}
+
+.hero-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-float);
+}
+
+/* Device-Specific Cards */
+.device-card {
+    background: var(--device-white);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.device-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+}
+
+/* Floating Indicators */
+.floating-indicator {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: var(--float-green);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.25rem;
+    box-shadow: var(--shadow-soft);
+    animation: pulse 2s infinite ease-in-out;
+}
+
+.indicator-income {
+    background: var(--float-green);
+    top: -10px;
+    right: -10px;
+}
+
+.indicator-expense {
+    background: var(--float-blue);
+    bottom: -10px;
+    left: -10px;
+}
+
+.indicator-savings {
+    background: var(--float-purple);
+    top: 50%;
+    right: -20px;
+    transform: translateY(-50%);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: var(--shadow-soft);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: var(--shadow-float);
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, 
+        var(--hero-primary) 0%, 
+        var(--hero-secondary) 50%, 
+        var(--hero-accent) 100%
+    );
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 0;
+}
+
+.hero-content {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--float-blue), var(--float-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .device-container {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+    
+    .smartphone {
+        width: 240px;
+        height: 480px;
+        transform: none;
+    }
+    
+    .laptop {
+        width: 360px;
+        height: 240px;
+        transform: none;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Standard Cards with Hero Theme */
+.card {
+    background: var(--hero-primary);
+    border-radius: 1rem;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+}
+
+.summary-card {
+    background: var(--hero-primary);
+    border-radius: 1.25rem;
+    padding: 1.75rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.summary-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-float);
+}
+
+/* Icon Containers */
+.icon-container {
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    background: linear-gradient(135deg, var(--float-blue), var(--float-purple));
+    color: white;
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+.icon-container:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-float);
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--float-blue), var(--float-purple));
+    color: white;
+    box-shadow: var(--shadow-soft);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+}
+
+.btn-secondary {
+    background: var(--hero-primary);
+    color: var(--text-primary);
+    border: 2px solid var(--float-blue);
+}
+
+/* Form Elements */
+.form-input {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background: var(--hero-primary);
+    color: var(--text-primary);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--float-blue);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+}
+
+/* Progress Bars */
+.progress-bar {
+    width: 100%;
+    height: 0.75rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.5s ease;
+    background: linear-gradient(90deg, var(--float-blue), var(--float-purple));
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--hero-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--float-blue), var(--float-purple));
+    border-radius: 4px;
+}
+
+/* Chart Overrides */
+canvas {
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+    border-radius: 0.5rem;
+}
